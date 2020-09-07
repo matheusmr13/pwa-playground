@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm run build --prefix ./packages/webapp",
-    "start": "npm run start --prefix ./packages/server"
+    "postinstall": "yarn install --cwd ./packages/webapp && yarn install --cwd ./packages/server",
+    "build": "yarn build --cwd ./packages/webapp",
+    "start": "yarn start --cwd ./packages/server"
   },
   "repository": {
     "type": "git",
