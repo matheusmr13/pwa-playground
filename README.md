@@ -1,6 +1,20 @@
-# PWA poc
+# PWA Playground
 
-Simple poc to demonstrate PWA powers
+My PWA playground. Features that I will explore:
+
+[x] Installation
+[x] Push notifications
+[ ] Bluetooth (Printer && Beacon)
+[ ] Updating
+[ ] TWA + Store
+[ ] Push (wake app to confirm connectivity)
+[ ] Camera API (QrCode scanner)
+[ ] File system API (write and read files)
+[ ] GPS (?)
+[ ] Acceleration (?)
+[ ] Deeplink
+[ ] Splash screen
+[ ] NFC
 
 To send push notifications, get your public and private keys using [this library](https://github.com/web-push-libs/web-push#command-line).
 

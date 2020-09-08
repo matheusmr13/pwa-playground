@@ -28,16 +28,22 @@ class PushNotficationService {
 
   async subscribeToReceivePushs() {
     const registration = await navigator.serviceWorker.ready;
-    this.subscription = await registration.pushManager.subscribe({
-      userVisibleOnly: true,
-      applicationServerKey: urlBase64ToUint8Array(REACT_APP_VAPID_PUBLIC_KEY!),
+    console.info(registration);
+    this.subscription = await new Promise((resolve) => {
+      registration.pushManager
+        .subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: urlBase64ToUint8Array(REACT_APP_VAPID_PUBLIC_KEY!),
+        })
+        .then(resolve);
     });
+    console.info('depois', JSON.stringify(this.subscription));
 
     localStorage.setItem('subscription', JSON.stringify(this.subscription));
   }
 
   async sendPush(push: any) {
-    if (!this.subscription) this.subscribeToReceivePushs();
+    if (!this.subscription) await this.subscribeToReceivePushs();
 
     const body = JSON.stringify({
       subscription: this.subscription,
