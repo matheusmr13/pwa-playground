@@ -3,7 +3,7 @@
 const dotEnv = require('dotenv');
 const { exec } = require('./utils');
 
-const { parsed } = dotEnv.config({ path: '.env' });
+const { parsed = {} } = dotEnv.config({ path: '.env' });
 const { argv } = process;
 
 const command = argv[argv.length - 1];
