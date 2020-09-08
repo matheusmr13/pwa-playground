@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "yarn --cwd ./packages/webapp install && yarn --cwd ./packages/server install",
-    "build": "yarn --cwd ./packages/webapp build && yarn --cwd ./packages/server build",
-    "start": "yarn --cwd ./packages/server start:prod"
+    "build": "./scripts/run.js build",
+    "start": "./scripts/run.js start"
   },
   "repository": {
     "type": "git",
@@ -18,5 +18,11 @@
   "bugs": {
     "url": "https://github.com/matheusmr13/pwa-poc/issues"
   },
-  "homepage": "https://github.com/matheusmr13/pwa-poc#readme"
+  "homepage": "https://github.com/matheusmr13/pwa-poc#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0"
+  },
+  "devDependencies": {
+    "prettier": "2.1.1"
+  }
 }
