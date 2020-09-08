@@ -16,7 +16,7 @@ const run = async () => {
 
   const cliEnv = envVars.join(' ');
 
-  exec(`${cliEnv} REACT_APP_VERSION=${process.env.npm_package_version} npm ${command}`, {
+  exec(`${cliEnv} REACT_APP_VERSION=${process.env.npm_package_version} npm run ${command}`, {
     cwd: './packages/webapp',
   });
 
