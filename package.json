@@ -1,8 +1,7 @@
 {
-  "name": "pwa-poc",
+  "name": "pwa-playground",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "PWA Playground with some experimental features",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "yarn --cwd ./packages/webapp install && yarn --cwd ./packages/server install",
@@ -12,18 +11,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/matheusmr13/pwa-poc.git"
+    "url": "git+https://github.com/matheusmr13/pwa-playground.git"
   },
   "author": "Matheus Martins",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/matheusmr13/pwa-poc/issues"
+    "url": "https://github.com/matheusmr13/pwa-playground/issues"
   },
-  "homepage": "https://github.com/matheusmr13/pwa-poc#readme",
-  "dependencies": {
-    "dotenv": "^8.2.0"
-  },
+  "homepage": "https://github.com/matheusmr13/pwa-playground#readme",
   "devDependencies": {
+    "dotenv": "^8.2.0",
     "prettier": "2.1.1"
   }
 }

@@ -1,12 +1,39 @@
 @import '~antd/dist/antd.less';
 
-.ant-menu-item a,
-.ant-menu-item svg {
-  color: #fff !important;
-}
-
 .ant-layout-header a {
   color: #fff !important;
+}
+.ant-menu-inline-collapsed {
+  width: 64px;
+}
+.ant-layout-sider-collapsed {
+  width: 64px !important;
+  min-width: 64px !important;
+  max-width: 64px !important;
+}
+.ant-menu-inline-collapsed > .ant-menu-item {
+  padding: 0 24px;
+}
+
+.ant-drawer-body {
+  padding: 24px 0;
+}
+
+.ant-layout-header {
+  background-color: #ea1d2c;
+  color: #fff;
+
+  .anticon {
+    color: #fff;
+  }
+}
+
+.ant-layout-sider {
+  background-color: #fff;
+}
+
+.isMobile .ant-layout-content {
+  padding: 0 !important;
 }
 
 .App {

@@ -11,6 +11,7 @@ module.exports = {
             modifyVars: {
               '@primary-color': mainColor,
               '@layout-header-background': mainColor,
+              '@menu-collapsed-width': '64px',
             },
             javascriptEnabled: true,
           },
