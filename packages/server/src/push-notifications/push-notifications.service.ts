@@ -10,24 +10,45 @@ const { VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY } = process.env;
 export class PushNotificationsService {
   constructor(private scheduler: SchedulerRegistry) {}
 
-  schedule(body) {
+  cancelTask(name: string) {
+    this.scheduler.deleteCronJob(name);
+  }
+
+  scheduleTask(when: Date, what: () => void) {
+    const job = new CronJob(when, what);
+    const name = `${Math.ceil(Math.random() * 1000000000)}`;
+    this.scheduler.addCronJob(name, job);
+    job.start();
+    return name;
+  }
+
+  schedulePush(
+    when: Date,
+    subscription: any,
+    pushBody: any,
+    onTrigger?: () => void,
+  ) {
     webpush.setVapidDetails(
       'mailto:example@yourdomain.org',
       VAPID_PUBLIC_KEY,
       VAPID_PRIVATE_KEY,
     );
+    return this.scheduleTask(when, () => {
+      if (onTrigger) onTrigger();
+      webpush.sendNotification(subscription, JSON.stringify(pushBody));
+    });
+  }
+
+  schedule(body) {
     const { subscription, pushBody } = body;
-    const job = new CronJob(
-      new Date(Date.now() + pushBody.secondsFromNow * 1000),
-      () => {
-        webpush.sendNotification(subscription, JSON.stringify(pushBody));
+    const { secondsFromNow, ...push } = pushBody;
+    this.schedulePush(
+      new Date(Date.now() + secondsFromNow * 1000),
+      subscription,
+      {
+        ...push,
+        showNotification: true,
       },
     );
-
-    this.scheduler.addCronJob(
-      `${Math.ceil(Math.random() * 1000000)}-push-notification`,
-      job,
-    );
-    job.start();
   }
 }

@@ -10,13 +10,13 @@ We have a **webapp** to be our PWA page and as simple as possible **server** to 
 
 ### Webapp
 
-- Created with (Create React App)[https://create-react-app.dev/]
-- Design by (Ant Design)[https://ant.design/]
+- Created with [Create React App](https://create-react-app.dev/)
+- Design by [Ant Design](https://ant.design/)
 -
 
 ### Server
 
-- Created with (Nestjs)[https://nestjs.com/]
+- Created with [Nestjs](https://nestjs.com/)
 
 ### Infra
 

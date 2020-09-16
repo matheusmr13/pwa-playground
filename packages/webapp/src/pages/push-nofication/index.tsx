@@ -1,9 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { PageHeader, Card, Button, Tag, Empty, Space, Form, Input, InputNumber } from 'antd';
+import { Button, Tag, Form, Input, InputNumber } from 'antd';
 import PushNotificationService from './service';
 import { useAppTitle } from '../../app/context';
 
 import Page from '../../base/components/page';
+import {
+  TagsOutlined,
+  ThunderboltOutlined,
+  ClockCircleOutlined,
+  TagsFilled,
+  ThunderboltFilled,
+  ClockCircleFilled,
+} from '@ant-design/icons';
 
 export interface IPushNotificationProps {}
 
@@ -13,32 +21,9 @@ const PERMISSION_COLOR = {
   default: 'default',
 } as any;
 
-{
-  /* <Card title="Status">
-        <Tag color={PERMISSION_COLOR[permission]}>permission {permission}</Tag>
-      </Card>
-      <Card title="Random actions">
-        <Button disabled={permission !== 'default'} onClick={askForPermission}>
-          Ask for permission
-        </Button>
-      </Card>
-      <Card title="Schedule push">
-        <Form initialValues={{ title: 'My cool title', secondsFromNow: 2 }} onFinish={onSchedulePush}>
-          <Form.Item label="Title" name="title">
-            <Input />
-          </Form.Item>
-          <Form.Item label="Seconds from now" name="secondsFromNow">
-            <InputNumber />
-          </Form.Item>
-          <Button disabled={permission !== 'granted'} htmlType="submit">
-            Schedule push
-          </Button>
-        </Form>
-      </Card> */
-}
 export default function PushNotification() {
   const [permission, setPermission] = useState(Notification.permission as string);
-  const [title, setTitle] = useAppTitle();
+  const [, setTitle] = useAppTitle();
 
   useEffect(() => {
     setTitle('Push notification');
@@ -59,10 +44,12 @@ export default function PushNotification() {
       items={[
         {
           title: 'Status',
+          getIcon: (selected: boolean) => (selected ? <TagsFilled /> : <TagsOutlined />),
           page: <Tag color={PERMISSION_COLOR[permission]}>permission {permission}</Tag>,
         },
         {
           title: 'Actions',
+          getIcon: (selected: boolean) => (selected ? <ThunderboltFilled /> : <ThunderboltOutlined />),
           page: (
             <Button disabled={permission !== 'default'} onClick={askForPermission}>
               Ask for permission
@@ -71,6 +58,7 @@ export default function PushNotification() {
         },
         {
           title: 'Schedule',
+          getIcon: (selected: boolean) => (selected ? <ClockCircleFilled /> : <ClockCircleOutlined />),
           page: (
             <Form initialValues={{ title: 'My cool title', secondsFromNow: 2 }} onFinish={onSchedulePush}>
               <Form.Item label="Title" name="title">
@@ -89,16 +77,3 @@ export default function PushNotification() {
     />
   );
 }
-
-// export default function PushNotification(props: IPushNotificationProps) {
-//   const isBrowserSupported = ;
-//   return (
-//     <PageHeader ghost={false} onBack={() => window.history.back()} title="Push notification">
-//       {isBrowserSupported ? (
-//         <PushNotificationActions />
-//       ) : (
-//         <Empty description="Your browser does not support push notifications" />
-//       )}
-//     </PageHeader>
-//   );
-// }

@@ -1,7 +1,6 @@
 {
   "name": "webapp",
   "version": "0.1.0",
-  "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.2.2",
     "@craco/craco": "^5.6.4",
@@ -14,8 +13,11 @@
     "@types/react-dom": "^16.9.0",
     "@types/react-router-dom": "^5.1.5",
     "antd": "^4.6.3",
+    "axios": "^0.20.0",
+    "axios-hooks": "^2.1.0",
     "cra-append-sw": "^2.7.0",
     "craco-less": "^1.17.0",
+    "idb-keyval": "^3.2.0",
     "react": "^16.13.1",
     "react-device-detect": "^1.13.1",
     "react-dom": "^16.13.1",

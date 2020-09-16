@@ -5,28 +5,37 @@ import { Card, PageHeader, Space, Empty } from 'antd';
 
 interface IPageItem {
   title: string;
+  getIcon: Function;
   page: ReactChildren | ReactChild;
 }
 
 export interface IPageProps {
   title: string;
-  isSupported: boolean;
+  isSupported?: boolean;
   items: IPageItem[];
 }
 
 export default function Page(props: IPageProps) {
-  const { title, isSupported, items } = props;
+  const { title, isSupported = true, items } = props;
   const [, setTitle] = useAppTitle();
-  const [selectedMenu, setSelectedMenu] = useState(items[0]);
+  const [selectedMenuIndex, setSelectedMenuIndex] = useState(0);
 
+  const selectedMenu = items[selectedMenuIndex];
   useEffect(() => {
     setTitle(title);
   }, [title]);
 
+  const handleMenuClick = (index: number) => {
+    setSelectedMenuIndex(index);
+  };
   if (isMobile) {
     return (
       <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-        <PageHeader title={selectedMenu.title} ghost={false} style={{ flex: 'auto' }}>
+        <PageHeader
+          title={selectedMenu.title}
+          ghost={false}
+          style={{ flex: 'auto', overflowY: 'auto', overflowX: 'hidden' }}
+        >
           {selectedMenu.page}
         </PageHeader>
         <div style={{ display: 'flex', borderTop: '1px solid #ccc', justifyContent: 'stretch', alignItems: 'stretch' }}>
@@ -36,15 +45,17 @@ export default function Page(props: IPageProps) {
                 backgroundColor: '#fff',
                 border: 'none',
                 flex: '1 1 0px',
-                padding: '8px 0',
+                padding: '12px 0',
+                paddingTop: item === selectedMenu ? '10px' : '12px',
                 fontWeight: item === selectedMenu ? 'bold' : undefined,
                 borderTop: item === selectedMenu ? '2px solid #ea1d2c' : '0',
                 outline: 'none',
               }}
               key={i}
-              onClick={() => setSelectedMenu(item)}
+              onClick={() => handleMenuClick(i)}
             >
-              {item.title}
+              <div>{item.getIcon(item === selectedMenu)}</div>
+              <div>{item.title}</div>
             </button>
           ))}
         </div>
@@ -53,11 +64,13 @@ export default function Page(props: IPageProps) {
   }
 
   return (
-    <PageHeader ghost={false} onBack={() => window.history.back()} title={title}>
+    <PageHeader ghost={false} title={title}>
       {isSupported ? (
         <Space direction="vertical" style={{ width: '100%' }}>
-          {items.map((item) => (
-            <Card title={item.title}>{item.page}</Card>
+          {items.map((item, i) => (
+            <Card key={i} title={item.title}>
+              {item.page}
+            </Card>
           ))}
         </Space>
       ) : (

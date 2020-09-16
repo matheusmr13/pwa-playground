@@ -6,11 +6,26 @@ import './index.css';
 import App from './app';
 import * as serviceWorker from './serviceWorker';
 
+import KeepaliveService from './pages/keep-alive/service';
+
+let resolver: any;
+const onUpdate = new Promise<void>((resolve) => (resolver = resolve));
+
 ReactDOM.render(
   <BrowserRouter>
-    <App />
+    <App onUpdate={onUpdate} />
   </BrowserRouter>,
   document.getElementById('root')
 );
 
-serviceWorker.register();
+serviceWorker.register({
+  onUpdate: () => {
+    resolver();
+  },
+  onRegister: (registration) => {
+    // registration.active!.postMessage!({
+    //   type: 'START_POLLING',
+    // });
+    KeepaliveService.onSendMessage((message: any) => registration.active!.postMessage(message));
+  },
+});

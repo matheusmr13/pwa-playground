@@ -1,3 +1,5 @@
+import Service from '../../base/service';
+
 function urlBase64ToUint8Array(base64String: string) {
   var padding = '='.repeat((4 - (base64String.length % 4)) % 4);
   var base64 = (base64String + padding).replace(/\-/g, '+').replace(/_/g, '/');
@@ -10,7 +12,7 @@ function urlBase64ToUint8Array(base64String: string) {
   }
   return outputArray;
 }
-const { REACT_APP_VAPID_PUBLIC_KEY, REACT_APP_BASE_URL } = process.env;
+const { REACT_APP_VAPID_PUBLIC_KEY } = process.env;
 
 class PushNotficationService {
   subscription: any;
@@ -28,7 +30,7 @@ class PushNotficationService {
 
   async subscribeToReceivePushs() {
     const registration = await navigator.serviceWorker.ready;
-    console.info(registration);
+
     this.subscription = await new Promise((resolve) => {
       registration.pushManager
         .subscribe({
@@ -37,24 +39,24 @@ class PushNotficationService {
         })
         .then(resolve);
     });
-    console.info('depois', JSON.stringify(this.subscription));
 
     localStorage.setItem('subscription', JSON.stringify(this.subscription));
   }
 
-  async sendPush(push: any) {
+  async getSubscription() {
     if (!this.subscription) await this.subscribeToReceivePushs();
+    return this.subscription;
+  }
 
-    const body = JSON.stringify({
-      subscription: this.subscription,
-      pushBody: push,
-    });
-    await fetch(`${REACT_APP_BASE_URL}/push-notifications/schedule`, {
-      headers: {
-        'content-type': 'application/json',
-      },
+  async sendPush(push: any) {
+    const subscription = await this.getSubscription();
+
+    await Service.fetch(`/push-notifications/schedule`, {
       method: 'POST',
-      body,
+      data: {
+        subscription,
+        pushBody: push,
+      },
     });
   }
 }

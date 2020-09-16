@@ -1,13 +1,7 @@
-import React from 'react';
-import { Layout, Space } from 'antd';
-import {
-  BellOutlined,
-  QuestionCircleOutlined,
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
-  ArrowLeftOutlined,
-} from '@ant-design/icons';
-import { useAppTitle } from './context';
+import React, { useState } from 'react';
+import { Badge, Layout, Popover, Space, List } from 'antd';
+import { BellOutlined, MenuUnfoldOutlined, MenuFoldOutlined, ArrowLeftOutlined } from '@ant-design/icons';
+import { useAppTitle, useNotifications } from './context';
 import { useHistory } from 'react-router-dom';
 import { isMobile } from 'react-device-detect';
 
@@ -19,6 +13,56 @@ interface HeaderProps {
 }
 
 const DEFAULT_TITLE = 'PWA Playground';
+
+function Notifications() {
+  const [isNotificationOpen, setNotificationOpen] = useState(false);
+  const [notifications, setNotifications] = useNotifications();
+
+  const handleActionClick = (callback: Function) => (e: any) => {
+    e.preventDefault();
+    callback();
+  };
+
+  return (
+    <Badge
+      count={notifications ? notifications.length : 0}
+      style={{
+        backgroundColor: '#fff',
+        color: '#ea1d2c',
+        fontWeight: 'bold',
+        marginRight: '22px',
+        marginTop: '22px',
+      }}
+    >
+      <Popover
+        content={
+          <List
+            itemLayout="horizontal"
+            dataSource={notifications}
+            renderItem={(notification: any) => (
+              <List.Item
+                actions={[
+                  <a onClick={handleActionClick(notification.action.callback)} href="#">
+                    {notification.action.label}
+                  </a>,
+                ]}
+              >
+                {notification.title}
+              </List.Item>
+            )}
+          />
+        }
+        title="Notifications"
+        trigger="click"
+        visible={isNotificationOpen}
+        onVisibleChange={setNotificationOpen}
+        placement="bottomRight"
+      >
+        <BellOutlined style={{ fontSize: '24px', padding: '22px' }} />
+      </Popover>
+    </Badge>
+  );
+}
 
 function Header(props: HeaderProps) {
   const history = useHistory();
@@ -40,7 +84,7 @@ function Header(props: HeaderProps) {
   };
 
   return (
-    <AntdHeader style={{ display: 'flex', justifyContent: 'space-between', padding: '0 24px 0 0' }}>
+    <AntdHeader style={{ display: 'flex', justifyContent: 'space-between', padding: '0' }}>
       <span
         onClick={() => (changeBehaviour ? handleBackButton() : onMenuToggle())}
         style={{ display: 'flex', alignItems: 'center', padding: '0 24px', cursor: 'pointer' }}
@@ -49,12 +93,7 @@ function Header(props: HeaderProps) {
       </span>
       <div style={{ fontWeight: 'bold', color: '#fff', flex: 'auto', fontSize: '20px' }}>{titleToShow}</div>
       <Space size="middle">
-        <a href="/push-notification" style={{ display: 'flex', alignItems: 'center' }}>
-          <BellOutlined style={{ fontSize: '24px' }} />
-        </a>
-        <a href="https://web.dev/progressive-web-apps/" style={{ display: 'flex', alignItems: 'center' }}>
-          <QuestionCircleOutlined style={{ fontSize: '24px' }} />
-        </a>
+        <Notifications />
       </Space>
     </AntdHeader>
   );
