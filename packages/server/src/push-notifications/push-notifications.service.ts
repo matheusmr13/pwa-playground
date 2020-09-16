@@ -11,7 +11,11 @@ export class PushNotificationsService {
   constructor(private scheduler: SchedulerRegistry) {}
 
   cancelTask(name: string) {
-    this.scheduler.deleteCronJob(name);
+    try {
+      this.scheduler.deleteCronJob(name);
+    } catch (e) {
+      console.info(`Cron ${name} not found!`);
+    }
   }
 
   scheduleTask(when: Date, what: () => void) {
