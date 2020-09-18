@@ -1,4 +1,4 @@
-import React, { useEffect, ReactChildren, ReactChild, useState } from 'react';
+import React, { useEffect, ReactChildren, ReactChild, useState, Children } from 'react';
 import { isMobile } from 'react-device-detect';
 import { useAppTitle } from '../../app/context';
 import { Card, PageHeader, Space, Empty } from 'antd';
@@ -12,22 +12,32 @@ interface IPageItem {
 export interface IPageProps {
   title: string;
   isSupported?: boolean;
-  items: IPageItem[];
+  items?: IPageItem[];
+  children?: ReactChild;
 }
 
 export default function Page(props: IPageProps) {
-  const { title, isSupported = true, items } = props;
+  const { title, isSupported = true, items = [], children } = props;
   const [, setTitle] = useAppTitle();
   const [selectedMenuIndex, setSelectedMenuIndex] = useState(0);
 
   const selectedMenu = items[selectedMenuIndex];
   useEffect(() => {
     setTitle(title);
-  }, [title]);
+  }, [title, setTitle]);
+
+  if (children) {
+    return (
+      <PageHeader ghost={false} title={title}>
+        {children}
+      </PageHeader>
+    );
+  }
 
   const handleMenuClick = (index: number) => {
     setSelectedMenuIndex(index);
   };
+
   if (isMobile) {
     return (
       <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>

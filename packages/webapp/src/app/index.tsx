@@ -15,6 +15,7 @@ import PushNotification from './../pages/push-nofication';
 import Keepalive from './../pages/keep-alive';
 import Printer from './../pages/printer';
 import Setting from './../pages/setting';
+import Home from './../pages/home';
 
 import { isMobile } from 'react-device-detect';
 
@@ -79,7 +80,9 @@ function App(props: { onUpdate: Promise<void> }) {
                   <item.rootComponent />
                 </Route>
               ))}
-              <Route path="/">Welcome to PWA playground</Route>
+              <Route path="/">
+                <Home />
+              </Route>
             </Switch>
           </Content>
           {!isMobile && (

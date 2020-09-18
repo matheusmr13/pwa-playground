@@ -26,10 +26,10 @@ We have a **webapp** to be our PWA page and as simple as possible **server** to 
 
 - [x] Installation
 - [x] Push notifications
+- [x] Push (wake app to confirm connectivity)
 - [ ] Bluetooth (Printer || Beacon)
 - [ ] Updating
 - [ ] TWA + Store
-- [ ] Push (wake app to confirm connectivity)
 - [ ] Camera API (QrCode scanner)
 - [ ] File system API (write and read files)
 - [ ] GPS (?)

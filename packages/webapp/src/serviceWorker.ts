@@ -26,7 +26,9 @@ type Config = {
 
 export function register(config?: Config) {
   const swFileName = process.env.NODE_ENV === 'production' ? 'service-worker.js' : 'custom-sw.js';
-
+  console.info({
+    in: 'serviceWorker' in navigator,
+  });
   if ('serviceWorker' in navigator) {
     // The URL constructor is available in all browsers that support SW.
     const publicUrl = new URL(process.env.PUBLIC_URL, window.location.href);
@@ -64,7 +66,6 @@ function registerValidSW(swUrl: string, config?: Config) {
   navigator.serviceWorker
     .register(swUrl)
     .then((registration) => {
-      console.info('registrou', registration);
       if (config && config.onRegister) {
         config.onRegister(registration);
       }

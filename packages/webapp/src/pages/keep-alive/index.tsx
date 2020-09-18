@@ -66,7 +66,7 @@ function Keepalive() {
   if (device) {
     return (
       <Page
-        isSupported={true}
+        isSupported={'serviceWorker' in navigator}
         title="Keepalive"
         items={[
           {
