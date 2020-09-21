@@ -1,14 +1,6 @@
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
-import {
-  IonApp,
-  IonIcon,
-  IonLabel,
-  IonRouterOutlet,
-  IonTabBar,
-  IonTabButton,
-  IonTabs
-} from '@ionic/react';
+import { IonApp, IonIcon, IonLabel, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { square, triangle, images } from 'ionicons/icons';
 import Tab1 from './pages/Tab1';
@@ -40,6 +32,7 @@ import './global.css';
 
 const App: React.FC = () => (
   <IonApp>
+    {/* <iframe src="http://localhost:3000/" style={{ border: '0' }}></iframe> */}
     <IonReactRouter>
       <IonTabs>
         <IonRouterOutlet>

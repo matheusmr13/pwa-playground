@@ -1,6 +1,6 @@
 {
-  "appId": "io.ionic.starter",
-  "appName": "photo-gallery-capacitor-react",
+  "appId": "com.pwa.playground.ionic",
+  "appName": "pwa-playground-ionic",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "build",
